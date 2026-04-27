@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electroneumática Interactiva</title>
+  <meta name="description" content="34 años de experiencia en automatización: mantenimiento, modernización, refacciones y capacitación." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <style>
+    :root{--bg:#0b0d12;--elev:#111520;--brand:#0ea5e9;--brand-2:#22d3ee;--text:#e5e7eb;--muted:#9ca3af;--ok:#10b981;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:var(--text);background:linear-gradient(180deg,#0b0d12 0%, #0b0d12 60%, #0c111b 100%);line-height:1.6}
+    img{max-width:100%;display:block}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{color:var(--brand-2)}
+    .container{width:min(1120px,100%);margin-inline:auto;padding:0 20px}
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip-link:focus{left:20px;top:20px;width:auto;height:auto;background:#111;color:#fff;padding:8px 12px;border-radius:8px}
+    .site-header{position:sticky;top:0;z-index:40;backdrop-filter:saturate(140%) blur(8px);background:rgba(8,10,15,.5);border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s ease, transform .2s ease}
+    .site-header.scrolled{background:rgba(8,10,15,.75)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:10px;align-items:center;color:#fff;font-weight:700}
+    .brand img{filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+    .site-nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+    .site-nav a{color:#e5e7eb;opacity:.9}
+    .site-nav a.active{color:#fff;opacity:1;border-bottom:2px solid var(--brand)}
+    .nav-toggle{display:none;background:none;border:0;cursor:pointer}
+    .nav-toggle .nav-toggle-bar{display:block;width:26px;height:2px;background:#fff;margin:5px 0;transition:.2s}
+    .hero{padding:64px 0 32px;background:radial-gradient(800px 300px at 10% -20%, rgba(34,211,238,.12), transparent 40%),radial-gradient(800px 300px at 90% -20%, rgba(14,165,233,.14), transparent 40%)}
+    .hero-grid{display:grid;gap:32px;align-items:center;grid-template-columns:1.2fr .8fr}
+    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 12px}
+    .hero p{color:var(--muted);margin:0 0 20px}
+    .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:10px 14px;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#081019;box-shadow:var(--shadow)}
+    .btn-ghost{border:1px solid rgba(255,255,255,.14);color:#e5e7eb;background:transparent}
+    .section{padding:64px 0}
+    .section.alt{background:linear-gradient(180deg,#0c111b 0%, #0b0d12 100%)}
+    .section-header{text-align:center;margin:0 0 32px}
+    .section-header h2{font-size:clamp(22px,3vw,32px);margin:0 0 8px}
+    .section-header p{color:var(--muted);margin:0}
+    .cards-3{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+    .card{background:var(--elev);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);min-height:160px}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .service-grid{display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+    .service{background:linear-gradient(180deg,#111827, #0f172a);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px}
+    .service h3{margin:0 0 8px;font-size:18px}
+    .service p{margin:0;color:var(--muted)}
+    .gallery-grid{display:grid;gap:10px;grid-template-columns:repeat(4,1fr)}
+    .gallery-item{border:0;background:transparent;cursor:pointer;padding:0;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+    .gallery-item img{transition:transform .3s ease}
+    .gallery-item:hover img{transform:scale(1.04)}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:60}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:min(95vw,1200px);max-height:90vh;border-radius:12px;box-shadow:var(--shadow)}
+    .lightbox-close{position:fixed;top:16px;right:16px;font-size:28px;border:0;border-radius:50%;width:40px;height:40px;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+    .contact-grid{display:grid;gap:24px;grid-template-columns:1fr 1fr}
+    .contact-list{margin:0;padding-left:18px}
+    .contact-list li{margin:6px 0}
+    .contact-form{background:var(--elev);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px}
+    .form-field{display:grid;gap:8px;margin:10px 0}
+    input,textarea{background:#0b1220;border:1px solid rgba(255,255,255,.14);color:#e5e7eb;border-radius:10px;padding:10px}
+    input:focus,textarea:focus{outline:2px solid var(--brand)}
+    .error{color:#fda4af;min-height:18px}
+    .form-status{margin-top:6px;color:var(--ok)}
+    .back-to-top{position:fixed;right:16px;bottom:16px;width:40px;height:40px;border-radius:50%;border:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#081019;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50;box-shadow:var(--shadow)}
+    .back-to-top.show{display:flex}
+    .site-footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 0;background:#0b0d12}
+    .footer-grid{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .footer-grid a{color:var(--muted)}
+    .footer-grid a:hover{color:#fff}
+    @media (max-width:960px){.hero-grid{grid-template-columns:1fr}.cards-3,.service-grid,.gallery-grid,.contact-grid{grid-template-columns:1fr}.site-nav{position:fixed;inset:60px 0 auto 0;background:rgba(8,10,15,.95);transform:translateY(-120%);transition:transform .2s ease}.site-nav.open{transform:translateY(0)}.site-nav ul{flex-direction:column;align-items:center;padding:12px 0}.nav-toggle{display:block}}
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inicio">Saltar al contenido</a>
+  <header class="site-header" id="header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Electroneumática Interactiva">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='%230ea5e9'%3E%3Cpath d='M7 2v20l10-10L7 2z'/%3E%3C/svg%3E" alt="Electroneumática Interactiva" width="40" height="40" />
+        <span>Electroneumática Interactiva</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="siteNav" class="site-nav" role="navigation" aria-label="Principal">
+        <ul>
+          <li><a href="#inicio" class="nav-link">Inicio</a></li>
+          <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+          <li><a href="#servicios" class="nav-link">Servicios</a></li>
+          <li><a href="#galeria" class="nav-link">Galería</a></li>
+          <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero" aria-label="Hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>El mejor servicio para una excelente solución técnica</h1>
+          <p>34 años de experiencia en elementos y sistemas de automatización. Soporte integral y modernización de tecnologías.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#contacto">Solicitar asesoría</a>
+            <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1600&auto=format&fit=crop" alt="Automatización industrial" width="960" height="720" loading="eager" />
+        </div>
+      </div>
+    </section>
+
+    <section id="nosotros" class="section">
+      <div class="container">
+        <header class="section-header">
+          <h2>Nosotros</h2>
+          <p>Proveedor confiable de soluciones de automatización para la industria en general.</p>
+        </header>
+        <div class="cards-3">
+          <article class="card">
+            <h3>Misión</h3>
+            <p>Otorgar soluciones satisfactorias en procesos industriales y maquinaria de manufactura de los diferentes procesos industriales.</p>
+          </article>
+          <article class="card">
+            <h3>Visión</h3>
+            <p>Ser un proveedor confiable y proporcionar alternativas en cada necesidad de automatización solicitada por la industria.</p>
+          </article>
+          <article class="card">
+            <h3>Filosofía y Valores</h3>
+            <p>Profesionalismo, servicio y calidad; propuestas técnicas con costos justos que impulsen el crecimiento de nuestros clientes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicios" class="section alt">
+      <div class="container">
+        <header class="section-header">
+          <h2>Servicios</h2>
+          <p>Soluciones integrales para mantener y modernizar tus sistemas.</p>
+        </header>
+        <div class="service-grid">
+          <article class="service"><h3>Contratos de mantenimiento</h3><p>Planes de mantenimiento y servicio especializado para máxima disponibilidad.</p></article>
+          <article class="service"><h3>Sistemas gemelos</h3><p>Fabricación de sistemas gemelos para pruebas, capacitación y continuidad operativa.</p></article>
+          <article class="service"><h3>Refacciones difíciles</h3><p>Asesoría y soporte para localizar refacciones críticas y obsoletas.</p></article>
+          <article class="service"><h3>Modernización tecnológica</h3><p>Reemplazo de tecnologías obsoletas por soluciones actuales y seguras.</p></article>
+          <article class="service"><h3>Apoyo para sistemas manuales</h3><p>Diseño de soluciones para eficientar procesos manuales.</p></article>
+          <article class="service"><h3>Capacitación profesional</h3><p>Programas didácticos y bancos de prueba para formación técnica.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria" class="section">
+      <div class="container">
+        <header class="section-header">
+          <h2>Galería</h2>
+          <p>Algunos de nuestros proyectos y equipos.</p>
+        </header>
+        <div class="gallery-grid" aria-live="polite">
+          <button class="gallery-item" data-full="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop" aria-label="Abrir imagen 1">
+            <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=600&auto=format&fit=crop" alt="Proyecto 1" width="480" height="360" loading="lazy" />
+          </button>
+          <button class="gallery-item" data-full="https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=1600&auto=format&fit=crop" aria-label="Abrir imagen 2">
+            <img src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=600&auto=format&fit=crop" alt="Proyecto 2" width="480" height="360" loading="lazy" />
+          </button>
+          <button class="gallery-item" data-full="https://images.unsplash.com/photo-1536305030431-4787c517ad71?q=80&w=1600&auto=format&fit=crop" aria-label="Abrir imagen 3">
+            <img src="https://images.unsplash.com/photo-1536305030431-4787c517ad71?q=80&w=600&auto=format&fit=crop" alt="Proyecto 3" width="480" height="360" loading="lazy" />
+          </button>
+          <button class="gallery-item" data-full="https://images.unsplash.com/photo-1454165205744-3b78555e5572?q=80&w=1600&auto=format&fit=crop" aria-label="Abrir imagen 4">
+            <img src="https://images.unsplash.com/photo-1454165205744-3b78555e5572?q=80&w=600&auto=format&fit=crop" alt="Proyecto 4" width="480" height="360" loading="lazy" />
+          </button>
+        </div>
+      </div>
+
+      <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Visor de imágenes">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar visor">×</button>
+        <img id="lightboxImg" alt="" />
+      </div>
+    </section>
+
+    <section id="contacto" class="section alt">
+      <div class="container">
+        <header class="section-header">
+          <h2>Contacto</h2>
+          <p>Resolvemos tus dudas y preparamos una propuesta a tu medida.</p>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <ul class="contact-list">
+              <li><strong>Dirección:</strong> Venus 94, Izcalli Rinconada, Tultitlán, Estado de México. C.P. 54930</li>
+              <li><strong>Correo:</strong> <a href="mailto:cardosojosemanuel@hotmail.com">cardosojosemanuel@hotmail.com</a></li>
+              <li><strong>Correo:</strong> <a href="mailto:director@electroneumaticainteractiva.com">director@electroneumaticainteractiva.com</a></li>
+              <li><strong>Teléfono:</strong> <a href="tel:+525547803794">(55) 4780 3794</a></li>
+              <li><strong>Teléfono:</strong> <a href="tel:+525523343840">(55) 2334 3840</a></li>
+            </ul>
+          </div>
+
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-field">
+              <label for="name">Nombre</label>
+              <input id="name" name="name" type="text" placeholder="Tu nombre" required minlength="2" />
+              <small class="error" data-for="name"></small>
+            </div>
+            <div class="form-field">
+              <label for="email">Correo</label>
+              <input id="email" name="email" type="email" placeholder="tucorreo@dominio.com" required />
+              <small class="error" data-for="email"></small>
+            </div>
+            <div class="form-field">
+              <label for="message">Mensaje</label>
+              <textarea id="message" name="message" rows="5" placeholder="Cuéntanos tu necesidad" required minlength="10"></textarea>
+              <small class="error" data-for="message"></small>
+            </div>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button id="backToTop" class="back-to-top" aria-label="Volver arriba">↑</button>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <p>© <span id="year"></span> Electroneumática Interactiva. Todos los derechos reservados.</p>
+      <nav aria-label="Secundaria">
+        <a href="#inicio">Inicio</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.getElementById('header');
+      const navToggle = document.getElementById('navToggle');
+      const siteNav = document.getElementById('siteNav');
+      const links = document.querySelectorAll('.nav-link');
+      const backToTop = document.getElementById('backToTop');
+      const year = document.getElementById('year');
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightboxImg');
+      const lbClose = document.getElementById('lightboxClose');
+      const galleryBtns = document.querySelectorAll('.gallery-item');
+
+      year.textContent = new Date().getFullYear();
+
+      const onScroll = () => {
+        header.classList.toggle('scrolled', window.scrollY > 8);
+        backToTop.classList.toggle('show', window.scrollY > 600);
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      navToggle?.addEventListener('click', () => {
+        const open = siteNav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(open));
+      });
+      links.forEach(link => link.addEventListener('click', () => {
+        siteNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }));
+
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          if (id && id.length > 1) {
+            e.preventDefault();
+            const el = document.querySelector(id);
+            el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', id);
+          }
+        });
+      });
+
+      const sections = [...document.querySelectorAll('main section[id]')];
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          const navA = document.querySelector(`.site-nav a[href="#${id}"]`);
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.site-nav a').forEach(a => a.classList.remove('active'));
+            navA?.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0.01 });
+      sections.forEach(s => obs.observe(s));
+
+      backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      const openLb = (src) => { lbImg.src = src; lb.setAttribute('aria-hidden', 'false'); lb.classList.add('open'); };
+      const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); lbImg.removeAttribute('src'); };
+      galleryBtns.forEach(btn => { btn.addEventListener('click', () => { const src = btn.getAttribute('data-full'); if (src) openLb(src); }); });
+      lbClose.addEventListener('click', closeLb);
+      lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
+
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('formStatus');
+      const showError = (id, msg) => { const el = document.querySelector(`.error[data-for="${id}"]`); if (el) el.textContent = msg || ''; };
+      const validators = {
+        name: (v) => v && v.trim().length >= 2 ? '' : 'Ingresa tu nombre (mín. 2 caracteres).',
+        email: (v) => /^[\w.!#$%&’*+/=?`{|}~^-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(v) ? '' : 'Ingresa un correo válido.',
+        message: (v) => v && v.trim().length >= 10 ? '' : 'Describe tu necesidad (mín. 10 caracteres).'
+      };
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        let ok = true;
+        for (const [k, v] of data.entries()) {
+          const msg = validators[k]?.(String(v)) || '';
+          showError(k, msg);
+          if (msg) ok = false;
+        }
+        if (!ok) { status.textContent = 'Por favor corrige los campos marcados.'; status.style.color = '#fca5a5'; return; }
+        status.textContent = '¡Gracias! Hemos recibido tu mensaje.'; status.style.color = 'var(--ok)'; form.reset();
+      }, { passive: false });
+    });
+  </script>
+</body>
+</html>
+
+

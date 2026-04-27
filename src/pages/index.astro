@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Servicios from '../components/Servicios.astro';
+import Beneficios from '../components/Beneficios.astro';
+import Diferenciadores from '../components/Diferenciadores.astro';
+import Testimonios from '../components/Testimonios.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Header />
+  <main id="contenido-principal">
+    <Hero />
+    <hr class="section-divider" />
+    <Servicios />
+    <hr class="section-divider" />
+    <Beneficios />
+    <hr class="section-divider" />
+    <Diferenciadores />
+    <hr class="section-divider" />
+    <Testimonios />
+    <hr class="section-divider" />
+    <Contacto />
+  </main>
+  <Footer />
+</Layout>

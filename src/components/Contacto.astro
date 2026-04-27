@@ -1,0 +1,344 @@
+---
+// TODO: swap WA_NUMBER before launch
+const WA_NUMBER  = '+526692629862';
+const WA_GENERAL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, quiero solicitar información sobre sus servicios.')}`;
+const PHONE_1    = '+525547803794';
+const PHONE_2    = '+525523343840';
+const EMAIL_1    = 'director@electroneumaticainteractiva.com';
+const EMAIL_2    = 'cardosojosemanuel@hotmail.com';
+---
+
+<section id="contacto" class="py-24 lg:py-32 bg-surface-800" aria-labelledby="contacto-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <header class="text-center max-w-2xl mx-auto mb-16">
+      <p class="font-sub text-blue-400 text-sm tracking-widest mb-3">CONTÁCTENOS</p>
+      <h2 id="contacto-heading" class="font-heading text-5xl sm:text-6xl text-white mb-4">
+        HABLEMOS HOY
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">
+        La vía más rápida es WhatsApp. Si prefieres, completa el formulario y te respondemos el mismo día hábil.
+      </p>
+    </header>
+
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
+
+      <!-- Left: contact info + WhatsApp CTA -->
+      <div class="space-y-8">
+
+        <!-- Primary WhatsApp CTA block -->
+        <div class="card-base p-8 text-center sm:text-left">
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-6">
+            <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-green-600/20 border border-green-600/30 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-green-400" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-heading text-2xl text-white mb-1">WhatsApp — Respuesta inmediata</h3>
+              <p class="text-slate-400 text-sm">Lunes a viernes 8:00–18:00 h · Sábado 9:00–14:00 h</p>
+            </div>
+          </div>
+          <a
+            href={WA_GENERAL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-3 w-full px-6 py-4 rounded-xl text-base font-bold text-white bg-green-600 hover:bg-green-500 transition-all duration-200 shadow-lg hover:shadow-green-600/30 hover:scale-[1.01] focus-visible:ring-2 focus-visible:ring-green-400"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Iniciar conversación por WhatsApp
+          </a>
+        </div>
+
+        <!-- Contact details -->
+        <div class="card-base p-8 space-y-5">
+          <h3 class="font-heading text-xl text-white mb-4">OTRAS FORMAS DE CONTACTO</h3>
+
+          <!-- Phone 1 -->
+          <a href={`tel:${PHONE_1}`} class="flex items-center gap-4 group hover:opacity-80 transition-opacity duration-200">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-600/15 border border-blue-700/30 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-blue-400" aria-hidden="true">
+                <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-sub text-slate-500 tracking-wider">TELÉFONO 1</p>
+              <p class="text-white font-medium">(55) 4780 3794</p>
+            </div>
+          </a>
+
+          <!-- Phone 2 -->
+          <a href={`tel:${PHONE_2}`} class="flex items-center gap-4 group hover:opacity-80 transition-opacity duration-200">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-600/15 border border-blue-700/30 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-blue-400" aria-hidden="true">
+                <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-sub text-slate-500 tracking-wider">TELÉFONO 2</p>
+              <p class="text-white font-medium">(55) 2334 3840</p>
+            </div>
+          </a>
+
+          <!-- Email 1 -->
+          <a href={`mailto:${EMAIL_1}`} class="flex items-center gap-4 group hover:opacity-80 transition-opacity duration-200">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-600/15 border border-cyan-700/30 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-cyan-400" aria-hidden="true">
+                <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-sub text-slate-500 tracking-wider">CORREO DIRECCIÓN</p>
+              <p class="text-white font-medium text-sm break-all">{EMAIL_1}</p>
+            </div>
+          </a>
+
+          <!-- Address -->
+          <div class="flex items-start gap-4">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-violet-600/15 border border-violet-700/30 flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-violet-400" aria-hidden="true">
+                <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.013 3.5-4.608 3.5-7.077A8.25 8.25 0 006.75 4.75c0 2.469 1.556 5.064 3.5 7.077a19.58 19.58 0 002.683 2.282c.467.333.893.625 1.144.742zM12 12.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-sub text-slate-500 tracking-wider mb-0.5">DIRECCIÓN</p>
+              <p class="text-white font-medium text-sm leading-snug">Venus 94, Izcalli Rinconada<br/>Tultitlán, Estado de México<br/>C.P. 54930</p>
+            </div>
+          </div>
+
+          <!-- Hours -->
+          <div class="flex items-start gap-4">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-600/15 border border-amber-700/30 flex-shrink-0 mt-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-amber-400" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs font-sub text-slate-500 tracking-wider mb-0.5">HORARIO DE ATENCIÓN</p>
+              <p class="text-white text-sm leading-relaxed">Lunes – Viernes: 8:00 – 18:00 h<br/>Sábado: 9:00 – 14:00 h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: contact form -->
+      <div class="card-base p-8">
+        <h3 class="font-heading text-2xl text-white mb-2">ENVÍANOS UN MENSAJE</h3>
+        <p class="text-slate-400 text-sm mb-7">Completa el formulario y te respondemos en el mismo día hábil.</p>
+
+        <form
+          id="contact-form"
+          class="space-y-5"
+          novalidate
+          aria-label="Formulario de contacto"
+        >
+          <!-- Honeypot (anti-spam, hidden from users) -->
+          <div class="hidden" aria-hidden="true">
+            <label for="website">Sitio web (no completar)</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <!-- Name -->
+          <div class="space-y-1.5">
+            <label for="cf-name" class="block text-sm font-medium text-slate-300">
+              Nombre completo <span class="text-rose-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="cf-name"
+              name="name"
+              required
+              minlength="2"
+              maxlength="100"
+              autocomplete="name"
+              placeholder="Ej. Ing. Carlos García"
+              class="w-full px-4 py-3 rounded-xl bg-surface-700 border border-white/10 text-white placeholder-slate-500 text-sm transition-colors duration-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              aria-required="true"
+            />
+            <p class="text-rose-400 text-xs min-h-[1rem]" id="cf-name-error" role="alert" aria-live="polite"></p>
+          </div>
+
+          <!-- Email -->
+          <div class="space-y-1.5">
+            <label for="cf-email" class="block text-sm font-medium text-slate-300">
+              Correo electrónico <span class="text-rose-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="cf-email"
+              name="email"
+              required
+              maxlength="200"
+              autocomplete="email"
+              placeholder="tucorreo@empresa.com"
+              class="w-full px-4 py-3 rounded-xl bg-surface-700 border border-white/10 text-white placeholder-slate-500 text-sm transition-colors duration-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              aria-required="true"
+            />
+            <p class="text-rose-400 text-xs min-h-[1rem]" id="cf-email-error" role="alert" aria-live="polite"></p>
+          </div>
+
+          <!-- Phone (optional) -->
+          <div class="space-y-1.5">
+            <label for="cf-phone" class="block text-sm font-medium text-slate-300">
+              Teléfono / WhatsApp <span class="text-slate-500 text-xs">(opcional)</span>
+            </label>
+            <input
+              type="tel"
+              id="cf-phone"
+              name="phone"
+              maxlength="20"
+              autocomplete="tel"
+              placeholder="55 1234 5678"
+              class="w-full px-4 py-3 rounded-xl bg-surface-700 border border-white/10 text-white placeholder-slate-500 text-sm transition-colors duration-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Service interest -->
+          <div class="space-y-1.5">
+            <label for="cf-service" class="block text-sm font-medium text-slate-300">
+              Servicio de interés
+            </label>
+            <select
+              id="cf-service"
+              name="service"
+              class="w-full px-4 py-3 rounded-xl bg-surface-700 border border-white/10 text-slate-300 text-sm transition-colors duration-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none cursor-pointer"
+            >
+              <option value="">Selecciona una opción…</option>
+              <option value="electroneumatica">Electroneumática Industrial</option>
+              <option value="domotica">Domótica e Instalaciones del Hogar</option>
+              <option value="instalaciones">Instalaciones Eléctricas</option>
+              <option value="mantenimiento">Contratos de Mantenimiento</option>
+              <option value="modernizacion">Modernización Tecnológica</option>
+              <option value="capacitacion">Capacitación Técnica</option>
+              <option value="otro">Otro / No estoy seguro</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div class="space-y-1.5">
+            <label for="cf-message" class="block text-sm font-medium text-slate-300">
+              Mensaje <span class="text-rose-400" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="cf-message"
+              name="message"
+              required
+              minlength="15"
+              maxlength="2000"
+              rows="4"
+              placeholder="Describe tu necesidad o proyecto. Incluye ubicación y urgencia si aplica."
+              class="w-full px-4 py-3 rounded-xl bg-surface-700 border border-white/10 text-white placeholder-slate-500 text-sm transition-colors duration-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y min-h-[7rem]"
+              aria-required="true"
+            ></textarea>
+            <p class="text-rose-400 text-xs min-h-[1rem]" id="cf-message-error" role="alert" aria-live="polite"></p>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            id="cf-submit"
+            class="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-base font-bold text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-blue-400"
+          >
+            <svg id="cf-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="hidden w-5 h-5 animate-spin" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <span id="cf-submit-text">Enviar mensaje</span>
+          </button>
+
+          <!-- Status message -->
+          <div
+            id="cf-status"
+            class="hidden rounded-xl px-4 py-3 text-sm font-medium"
+            role="status"
+            aria-live="polite"
+          ></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Map embed placeholder -->
+    <div class="mt-12 rounded-2xl overflow-hidden border border-white/10 shadow-xl" style="height: 320px;">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3755.5!2d-99.1924!3d19.6474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVenus+94%2C+Izcalli+Rinconada%2C+Tultitl%C3%A1n!5e0!3m2!1ses!2smx!4v1712000000000!5m2!1ses!2smx"
+        width="100%"
+        height="320"
+        style="border:0; filter: invert(90%) hue-rotate(180deg);"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación de Electroneumática Interactiva — Venus 94, Tultitlán, Estado de México"
+        aria-label="Mapa de ubicación"
+      ></iframe>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // ── Contact form: client-side validation ────────────────────────────
+  const form    = document.getElementById('contact-form') as HTMLFormElement | null;
+  const spinner = document.getElementById('cf-spinner');
+  const btnText = document.getElementById('cf-submit-text');
+  const btnEl   = document.getElementById('cf-submit') as HTMLButtonElement | null;
+  const status  = document.getElementById('cf-status');
+
+  const setError = (id: string, msg: string) => {
+    const el = document.getElementById(`cf-${id}-error`);
+    const input = document.getElementById(`cf-${id}`);
+    if (el) el.textContent = msg;
+    if (input) {
+      input.classList.toggle('border-rose-500', !!msg);
+      input.classList.toggle('border-white/10', !msg);
+    }
+  };
+
+  const validators: Record<string, (v: string) => string> = {
+    name:    v => v.trim().length >= 2 ? '' : 'Por favor ingresa tu nombre (mín. 2 caracteres).',
+    email:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? '' : 'Ingresa un correo electrónico válido.',
+    message: v => v.trim().length >= 15 ? '' : 'Describe tu necesidad (mín. 15 caracteres).',
+  };
+
+  form?.addEventListener('submit', async (e: Event) => {
+    e.preventDefault();
+
+    // Honeypot check
+    const honeypot = (form.elements.namedItem('website') as HTMLInputElement)?.value;
+    if (honeypot) return; // bot detected, silently ignore
+
+    const data = new FormData(form);
+    let valid = true;
+
+    for (const [field, validate] of Object.entries(validators)) {
+      const val = data.get(field) as string ?? '';
+      const err = validate(val);
+      setError(field, err);
+      if (err) valid = false;
+    }
+
+    if (!valid) return;
+
+    // Simulate submission (replace with actual fetch/Netlify form/Formspree)
+    if (btnEl) btnEl.disabled = true;
+    if (spinner) spinner.classList.remove('hidden');
+    if (btnText) btnText.textContent = 'Enviando…';
+
+    await new Promise(r => setTimeout(r, 1200)); // simulated network call
+
+    if (btnEl) btnEl.disabled = false;
+    if (spinner) spinner.classList.add('hidden');
+    if (btnText) btnText.textContent = 'Enviar mensaje';
+
+    if (status) {
+      status.classList.remove('hidden', 'bg-rose-900/40', 'text-rose-300', 'bg-green-900/40', 'text-green-300');
+      status.classList.add('bg-green-900/40', 'text-green-300');
+      status.textContent = '¡Mensaje enviado! Te responderemos antes del cierre del día hábil.';
+    }
+    form.reset();
+    // Clear inline error borders
+    ['name', 'email', 'message'].forEach(f => setError(f, ''));
+  });
+</script>
