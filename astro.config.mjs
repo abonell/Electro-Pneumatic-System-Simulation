@@ -3,11 +3,12 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: swap this for your production domain before deploying
-const SITE_URL = 'https://electroneumaticainteractiva.com';
+const SITE_URL = 'https://abonell.github.io';
+const BASE_PATH = '/Electro-Pneumatic-System-Simulation';
 
 export default defineConfig({
   site: SITE_URL,
+  base: BASE_PATH,
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
