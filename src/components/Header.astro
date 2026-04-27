@@ -1,15 +1,17 @@
 ---
+import Logo from './Logo.astro';
+
 // TODO: swap WhatsApp number before launch
 const WA_NUMBER = '+526692629862';
 const WA_MSG    = encodeURIComponent('Hola, me interesa conocer sus servicios de automatización e instalaciones eléctricas.');
 const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
 const navLinks = [
-  { label: 'Inicio',        href: '#inicio' },
-  { label: 'Servicios',     href: '#servicios' },
-  { label: 'Beneficios',    href: '#beneficios' },
-  { label: 'Testimonios',   href: '#testimonios' },
-  { label: 'Contacto',      href: '#contacto' },
+  { label: 'Inicio',      href: '#inicio' },
+  { label: 'Servicios',   href: '#servicios' },
+  { label: 'Beneficios',  href: '#beneficios' },
+  { label: 'Testimonios', href: '#testimonios' },
+  { label: 'Contacto',   href: '#contacto' },
 ];
 ---
 
@@ -18,10 +20,10 @@ const navLinks = [
   class="fixed top-0 inset-x-0 z-40 transition-all duration-300"
   aria-label="Encabezado del sitio"
 >
-  <!-- Backdrop: only visible after scroll — JS toggles data-scrolled -->
+  <!-- Backdrop: only visible after scroll — JS toggles -->
   <div
     id="nav-backdrop"
-    class="absolute inset-0 bg-surface-900/0 backdrop-blur-0 border-b border-transparent transition-all duration-300"
+    class="absolute inset-0 border-b border-transparent transition-all duration-300"
     aria-hidden="true"
   ></div>
 
@@ -31,25 +33,13 @@ const navLinks = [
       role="navigation"
       aria-label="Navegación principal"
     >
-      <!-- Logo / brand -->
+      <!-- Logo / brand — uses Logo.astro wordmark -->
       <a
         href="#inicio"
-        class="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg p-1"
+        class="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg p-1 group"
         aria-label="Electroneumática Interactiva — inicio"
       >
-        <!-- Lightning bolt mark -->
-        <span
-          class="flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg group-hover:shadow-blue-500/40 transition-shadow duration-300"
-          aria-hidden="true"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-5 h-5">
-            <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.818a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.845-.143z" clip-rule="evenodd"/>
-          </svg>
-        </span>
-        <span class="hidden sm:flex flex-col leading-none">
-          <span class="font-heading text-xl text-white tracking-wider">ELECTRONEUMÁTICA</span>
-          <span class="font-sub text-xs text-blue-400 tracking-widest">INTERACTIVA</span>
-        </span>
+        <Logo wordmark size={36} />
       </a>
 
       <!-- Desktop nav links -->
@@ -66,20 +56,37 @@ const navLinks = [
         ))}
       </ul>
 
-      <!-- Desktop CTA + mobile toggle -->
+      <!-- Desktop CTA + theme toggle + mobile toggle -->
       <div class="flex items-center gap-3">
         <!-- WhatsApp CTA button (desktop) -->
         <a
           href={WA_HREF}
           target="_blank"
           rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-green-600 hover:bg-green-500 text-white transition-all duration-200 hover:shadow-lg hover:shadow-green-600/30 focus-visible:ring-2 focus-visible:ring-green-400"
+          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-green-600 hover:bg-green-500 text-white transition-all duration-200 hover:shadow-lg hover:shadow-green-600/30 hover:scale-[1.03] focus-visible:ring-2 focus-visible:ring-green-400"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 flex-shrink-0" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
           WhatsApp
         </a>
+
+        <!-- Theme toggle (sun = shown on dark → click to go light; moon = shown on light → click to go dark) -->
+        <button
+          id="theme-toggle"
+          type="button"
+          aria-label="Activar modo claro"
+          title="Cambiar tema"
+        >
+          <!-- Moon icon — shown in dark mode (click to switch to light) -->
+          <svg class="icon-moon w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd"/>
+          </svg>
+          <!-- Sun icon — shown in light mode (click to switch to dark) -->
+          <svg class="icon-sun w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.166 17.834a.75.75 0 00-1.06 1.06l1.59 1.591a.75.75 0 001.061-1.06l-1.59-1.591zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.166 6.166a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 00-1.061-1.061l-1.59 1.591z"/>
+          </svg>
+        </button>
 
         <!-- Mobile hamburger -->
         <button
@@ -131,18 +138,68 @@ const navLinks = [
 </header>
 
 <script>
-  // ── Scroll → opaque navbar ──────────────────────────────────────────
-  const header   = document.getElementById('site-header');
+  // ── Theme toggle ─────────────────────────────────────────────────────
+  const themeBtn = document.getElementById('theme-toggle');
+
+  const applyTheme = (theme: string) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    // Update meta theme-color dynamically for browsers that respect it
+    document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach(m => {
+      const media = m.getAttribute('media') || '';
+      if (media.includes('dark'))  m.content = theme === 'dark'  ? '#050810' : '#f7f9fc';
+      if (media.includes('light')) m.content = theme === 'light' ? '#f7f9fc' : '#050810';
+    });
+    if (themeBtn) {
+      themeBtn.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'
+      );
+    }
+    // Signal other scripts (e.g. navbar backdrop) to refresh
+    document.documentElement.dispatchEvent(new CustomEvent('themechange'));
+  };
+
+  themeBtn?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') ?? 'dark';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  // Sync aria-label on load
+  const initialTheme = document.documentElement.getAttribute('data-theme') ?? 'dark';
+  if (themeBtn) {
+    themeBtn.setAttribute(
+      'aria-label',
+      initialTheme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'
+    );
+  }
+
+  // Listen for OS-level changes only when user has no saved preference
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      applyTheme(e.matches ? 'light' : 'dark');
+    }
+  });
+
+  // ── Scroll → frosted glass navbar ──────────────────────────────────
   const backdrop = document.getElementById('nav-backdrop');
   const onScroll = () => {
     const scrolled = window.scrollY > 40;
+    const isLight  = document.documentElement.getAttribute('data-theme') === 'light';
     if (backdrop) {
-      backdrop.style.backgroundColor = scrolled ? 'rgba(5,8,16,0.85)' : 'rgba(5,8,16,0)';
-      backdrop.style.backdropFilter  = scrolled ? 'blur(12px) saturate(140%)' : 'blur(0)';
-      backdrop.style.borderColor     = scrolled ? 'rgba(255,255,255,0.07)' : 'transparent';
+      backdrop.style.backgroundColor = scrolled
+        ? (isLight ? 'rgba(247,249,252,0.90)' : 'rgba(5,8,16,0.82)')
+        : (isLight ? 'rgba(247,249,252,0)'    : 'rgba(5,8,16,0)');
+      backdrop.style.backdropFilter  = scrolled ? 'blur(14px) saturate(150%)' : 'blur(0)';
+      backdrop.style.webkitBackdropFilter = scrolled ? 'blur(14px) saturate(150%)' : 'blur(0)';
+      backdrop.style.borderColor     = scrolled
+        ? (isLight ? 'rgba(15,23,42,0.09)' : 'rgba(255,255,255,0.07)')
+        : 'transparent';
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
+  // Re-run on theme change so navbar is correct if user toggles while scrolled
+  document.documentElement.addEventListener('themechange', onScroll);
   onScroll();
 
   // ── Mobile menu toggle ───────────────────────────────────────────────
@@ -156,7 +213,6 @@ const navLinks = [
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     mobileMenu!.style.maxHeight = open ? `${mobileMenu!.scrollHeight}px` : '0';
 
-    // Animate to X
     if (bars && bars.length === 3) {
       if (open) {
         bars[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
@@ -170,7 +226,6 @@ const navLinks = [
     }
   });
 
-  // Close mobile menu when a link is clicked
   document.querySelectorAll('.mobile-nav-link').forEach(link => {
     link.addEventListener('click', () => {
       if (mobileMenu) {
@@ -190,7 +245,7 @@ const navLinks = [
   const sections = document.querySelectorAll<HTMLElement>('section[id]');
   const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
 
-  const observer = new IntersectionObserver(
+  const navObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -199,13 +254,11 @@ const navLinks = [
             const active = a.getAttribute('href') === `#${id}`;
             a.classList.toggle('text-white', active);
             a.classList.toggle('text-slate-300', !active);
-            a.style.setProperty('--tw-after-scale-x', active ? '1' : '0');
           });
         }
       });
     },
     { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
   );
-
-  sections.forEach(s => observer.observe(s));
+  sections.forEach(s => navObserver.observe(s));
 </script>

@@ -80,13 +80,25 @@ const jsonLd = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+  <!-- No-FOUC: read saved theme preference BEFORE first paint -->
+  <script is:inline>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var preferred = (saved === 'light' || saved === 'dark')
+        ? saved
+        : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', preferred);
+    })();
+  </script>
+
   <!-- Primary Meta -->
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalUrl} />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#050810" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#050810" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f9fc" />
+  <meta name="color-scheme" content="dark light" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -109,30 +121,29 @@ const jsonLd = {
   <link rel="alternate" hreflang="es" href={canonicalUrl} />
   <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
-  <!-- Favicon -->
+  <!-- Favicon — custom SVG mark -->
   <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
   <link rel="icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
 
-  <!-- Fonts: preconnect then non-blocking load -->
+  <!-- DNS prefetch + preconnect for external origins -->
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Fonts: preload → non-blocking swap
+       Subset: latin only (display=swap handles FOUT gracefully)
+  -->
   <link
     rel="preload"
     as="style"
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap&subset=latin"
     onload="this.onload=null;this.rel='stylesheet'"
   />
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap&subset=latin" />
   </noscript>
-
-  <!-- Preload hero image (LCP) -->
-  <link
-    rel="preload"
-    as="image"
-    href="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&auto=format&fit=crop&q=80"
-    fetchpriority="high"
-  />
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -143,17 +154,16 @@ const jsonLd = {
   <slot />
 
   <!-- Floating WhatsApp Button -->
-  <!-- TODO: replace ++526692629862 with real WhatsApp business number -->
+  <!-- TODO: replace +526692629862 with real WhatsApp business number -->
   <a
     href="https://wa.me/+526692629862?text=Hola%2C%20me%20interesa%20conocer%20sus%20servicios%20de%20automatizaci%C3%B3n%20e%20instalaciones%20el%C3%A9ctricas."
-    class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 focus-visible:scale-110 focus-visible:ring-4 focus-visible:ring-green-400/50"
+    class="btn-magnetic fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-2xl transition-all duration-300 focus-visible:ring-4 focus-visible:ring-green-400/50"
     style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Contactar por WhatsApp"
     title="Chatear por WhatsApp"
   >
-    <!-- WhatsApp SVG icon -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -176,6 +186,7 @@ const jsonLd = {
     id="back-to-top"
     class="fixed bottom-24 right-6 z-40 w-10 h-10 rounded-full flex items-center justify-center bg-blue-700/80 text-white border border-blue-500/40 shadow-lg opacity-0 translate-y-4 transition-all duration-300 hover:bg-blue-600 focus-visible:ring-2 focus-visible:ring-blue-400"
     aria-label="Volver al inicio de la página"
+    aria-hidden="true"
     type="button"
   >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
@@ -184,7 +195,7 @@ const jsonLd = {
   </button>
 
   <script>
-    // Back to top visibility
+    // ── Back to top visibility ───────────────────────────────────────────
     const btn = document.getElementById('back-to-top');
     if (btn) {
       const toggle = () => {
@@ -197,6 +208,101 @@ const jsonLd = {
       toggle();
       btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
+
+    // ── Scroll-reveal IntersectionObserver (fallback for browsers without animation-timeline) ──
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasScrollTimeline = CSS.supports('animation-timeline', 'view()');
+
+    if (!prefersReduced && !hasScrollTimeline) {
+      const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+      if (revealEls.length) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              io.unobserve(e.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -60px 0px', threshold: 0.08 });
+        revealEls.forEach(el => io.observe(el));
+      }
+    } else if (!prefersReduced && hasScrollTimeline) {
+      // Native scroll timeline — ensure content is visible immediately
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+        el.classList.add('visible');
+      });
+    } else {
+      // Reduced motion: show all immediately
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+        el.classList.add('visible');
+      });
+    }
+
+    // ── Stat count-up on view ────────────────────────────────────────────
+    if (!prefersReduced) {
+      const counters = document.querySelectorAll<HTMLElement>('[data-countup]');
+      if (counters.length) {
+        const countUp = (el: HTMLElement) => {
+          const target = parseFloat(el.dataset.countup || '0');
+          const suffix = el.dataset.suffix || '';
+          const duration = 1400;
+          const start = performance.now();
+          const update = (now: number) => {
+            const elapsed = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - elapsed, 3); // ease-out-cubic
+            const current = Math.round(eased * target);
+            el.textContent = current + suffix;
+            if (elapsed < 1) requestAnimationFrame(update);
+          };
+          requestAnimationFrame(update);
+        };
+
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              countUp(e.target as HTMLElement);
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        counters.forEach(c => io.observe(c));
+      }
+    }
+
+    // ── Bento card spotlight (mouse position via CSS variable) ──────────
+    if (!prefersReduced && window.matchMedia('(hover: hover)').matches) {
+      document.querySelectorAll<HTMLElement>('.bento-card').forEach(card => {
+        card.addEventListener('mousemove', (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top)  / rect.height) * 100;
+          card.style.setProperty('--mx', `${x}%`);
+          card.style.setProperty('--my', `${y}%`);
+        }, { passive: true });
+      });
+    }
+
+    // ── Hero spotlight cursor-follow (touch disabled) ────────────────────
+    const spotlight = document.querySelector<HTMLElement>('.hero-spotlight');
+    if (spotlight && !prefersReduced && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const hero = document.getElementById('inicio');
+      hero?.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top)  / rect.height) * 100;
+        spotlight.style.setProperty('--sx', `${x}%`);
+        spotlight.style.setProperty('--sy', `${y}%`);
+      }, { passive: true });
+    }
+
+    // ── Image blur-up on load ────────────────────────────────────────────
+    document.querySelectorAll<HTMLImageElement>('img.img-blur-up').forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+      }
+    });
   </script>
 </body>
 </html>

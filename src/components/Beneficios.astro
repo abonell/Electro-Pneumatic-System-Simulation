@@ -38,25 +38,26 @@ const benefits = [
   },
 ];
 
-const colorMap: Record<string, { bg: string; text: string; border: string }> = {
-  blue:   { bg: 'bg-blue-600/15',   text: 'text-blue-400',   border: 'border-blue-700/30' },
-  cyan:   { bg: 'bg-cyan-600/15',   text: 'text-cyan-400',   border: 'border-cyan-700/30' },
-  violet: { bg: 'bg-violet-600/15', text: 'text-violet-400', border: 'border-violet-700/30' },
-  green:  { bg: 'bg-green-600/15',  text: 'text-green-400',  border: 'border-green-700/30' },
-  amber:  { bg: 'bg-amber-600/15',  text: 'text-amber-400',  border: 'border-amber-700/30' },
-  rose:   { bg: 'bg-rose-600/15',   text: 'text-rose-400',   border: 'border-rose-700/30' },
+const colorMap: Record<string, { bg: string; text: string; border: string; glow: string }> = {
+  blue:   { bg: 'bg-blue-600/15',   text: 'text-blue-400',   border: 'border-blue-700/30',   glow: 'hover:shadow-blue-900/40' },
+  cyan:   { bg: 'bg-cyan-600/15',   text: 'text-cyan-400',   border: 'border-cyan-700/30',   glow: 'hover:shadow-cyan-900/40' },
+  violet: { bg: 'bg-violet-600/15', text: 'text-violet-400', border: 'border-violet-700/30', glow: 'hover:shadow-violet-900/40' },
+  green:  { bg: 'bg-green-600/15',  text: 'text-green-400',  border: 'border-green-700/30',  glow: 'hover:shadow-green-900/40' },
+  amber:  { bg: 'bg-amber-600/15',  text: 'text-amber-400',  border: 'border-amber-700/30',  glow: 'hover:shadow-amber-900/40' },
+  rose:   { bg: 'bg-rose-600/15',   text: 'text-rose-400',   border: 'border-rose-700/30',   glow: 'hover:shadow-rose-900/40' },
 };
 ---
 
 <section id="beneficios" class="py-24 lg:py-32" aria-labelledby="beneficios-heading">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start mb-20">
+    <!-- Two-col heading + image -->
+    <div class="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center mb-20 reveal">
 
       <!-- Left: heading -->
       <div>
-        <p class="font-sub text-blue-400 text-sm tracking-widest mb-3">POR QUÉ ELEGIRNOS</p>
-        <h2 id="beneficios-heading" class="font-heading text-5xl sm:text-6xl text-white mb-6">
+        <p class="font-sub text-sm tracking-widest mb-3 section-eyebrow inline-flex text-blue-400">POR QUÉ ELEGIRNOS</p>
+        <h2 id="beneficios-heading" class="font-heading text-5xl sm:text-6xl text-white mb-6 mt-2">
           LA DIFERENCIA<br/>
           <span class="text-blue-400">QUE SE NOTA</span>
         </h2>
@@ -65,49 +66,64 @@ const colorMap: Record<string, { bg: string; text: string; border: string }> = {
         </p>
       </div>
 
-      <!-- Right: feature image -->
+      <!-- Right: feature image with glassmorphism stat card -->
       <div class="hidden lg:block relative rounded-2xl overflow-hidden shadow-2xl mt-8 lg:mt-0">
-        <img
-          src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&auto=format&fit=crop&q=75"
-          alt="Técnico inspeccionando tablero eléctrico industrial"
-          width="800"
-          height="600"
-          loading="lazy"
-          decoding="async"
-          class="w-full h-72 object-cover"
-        />
-        <!-- Floating stat -->
-        <div class="absolute bottom-4 left-4 flex items-center gap-3 bg-surface-900/90 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-3 shadow-lg">
-          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-600/20 border border-green-600/30">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=75&fm=webp 900w"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=75"
+            alt="Técnico inspeccionando tablero eléctrico de control industrial"
+            width="900"
+            height="600"
+            loading="lazy"
+            decoding="async"
+            class="w-full h-80 object-cover img-blur-up"
+          />
+        </picture>
+
+        <!-- Glassmorphism floating stat -->
+        <div class="absolute bottom-4 left-4 glass-panel flex items-center gap-3 px-4 py-3 shadow-xl">
+          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-600/20 border border-green-600/30 flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-green-400" aria-hidden="true">
               <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/>
             </svg>
           </div>
           <div>
-            <p class="font-heading text-2xl text-white leading-none">98%</p>
+            <p class="font-heading text-2xl text-white leading-none">
+              <span class="stat-counter" data-countup="98" data-suffix="%" aria-label="98%">98%</span>
+            </p>
             <p class="font-sub text-xs text-slate-400 tracking-wider mt-0.5">SATISFACCIÓN CLIENTE</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Benefits grid -->
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" role="list">
+    <!-- Benefits bento grid — 3-col on lg, each card is a bento-card -->
+    <ul
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal-stagger"
+      role="list"
+      aria-label="Ventajas de Electroneumática Interactiva"
+    >
       {benefits.map(b => {
         const c = colorMap[b.color];
         return (
-          <li class="card-base p-6 flex gap-4">
-            <!-- Icon -->
-            <div class={`flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-xl border ${c.bg} ${c.border}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-5 h-5 ${c.text}`} aria-hidden="true">
-                <Fragment set:html={b.icon} />
-              </svg>
-            </div>
-            <!-- Text -->
-            <div>
-              <h3 class="font-heading text-lg text-white mb-1">{b.title}</h3>
-              <p class="text-slate-400 text-sm leading-relaxed">{b.desc}</p>
-            </div>
+          <li>
+            <article class={`bento-card p-6 flex gap-4 h-full ${c.glow} transition-shadow duration-300`}>
+              <!-- Colored icon -->
+              <div class={`flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-xl border ${c.bg} ${c.border}`}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-5 h-5 ${c.text}`} aria-hidden="true">
+                  <Fragment set:html={b.icon} />
+                </svg>
+              </div>
+              <!-- Text -->
+              <div>
+                <h3 class={`font-heading text-lg text-white mb-1 group-hover:${c.text} transition-colors duration-200`}>{b.title}</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">{b.desc}</p>
+              </div>
+            </article>
           </li>
         );
       })}

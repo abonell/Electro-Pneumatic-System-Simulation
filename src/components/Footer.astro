@@ -1,25 +1,27 @@
 ---
+import Logo from './Logo.astro';
+
 const year = new Date().getFullYear();
 
 const navSections = [
   {
     heading: 'Servicios',
     links: [
-      { label: 'Electroneumática', href: '#servicios' },
-      { label: 'Domótica',         href: '#servicios' },
+      { label: 'Electroneumática',     href: '#servicios' },
+      { label: 'Domótica',             href: '#servicios' },
       { label: 'Instalaciones Eléctricas', href: '#servicios' },
-      { label: 'Mantenimiento',    href: '#servicios' },
-      { label: 'Modernización',    href: '#servicios' },
-      { label: 'Capacitación',     href: '#servicios' },
+      { label: 'Mantenimiento',        href: '#servicios' },
+      { label: 'Modernización',        href: '#servicios' },
+      { label: 'Capacitación',         href: '#servicios' },
     ],
   },
   {
     heading: 'Empresa',
     links: [
-      { label: 'Inicio',       href: '#inicio' },
-      { label: 'Beneficios',   href: '#beneficios' },
-      { label: 'Testimonios',  href: '#testimonios' },
-      { label: 'Contacto',     href: '#contacto' },
+      { label: 'Inicio',      href: '#inicio' },
+      { label: 'Beneficios',  href: '#beneficios' },
+      { label: 'Testimonios', href: '#testimonios' },
+      { label: 'Contacto',    href: '#contacto' },
     ],
   },
 ];
@@ -28,7 +30,7 @@ const WA_NUMBER = '+526692629862'; // TODO: replace
 const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, me interesa conocer sus servicios.')}`;
 ---
 
-<footer class="bg-surface-900 border-t border-white/05" role="contentinfo" aria-label="Pie de página">
+<footer class="bg-surface-900 border-t border-white/[0.05]" role="contentinfo" aria-label="Pie de página">
 
   <!-- Main footer grid -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
@@ -38,18 +40,10 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, m
       <div class="sm:col-span-2 lg:col-span-2">
         <a
           href="#inicio"
-          class="inline-flex items-center gap-3 mb-5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg"
+          class="inline-flex mb-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg"
           aria-label="Electroneumática Interactiva — inicio"
         >
-          <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-5 h-5">
-              <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.818a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.845-.143z" clip-rule="evenodd"/>
-            </svg>
-          </span>
-          <div class="leading-none">
-            <div class="font-heading text-lg text-white tracking-wider">ELECTRONEUMÁTICA</div>
-            <div class="font-sub text-xs text-blue-400 tracking-widest">INTERACTIVA</div>
-          </div>
+          <Logo wordmark size={36} />
         </a>
 
         <p class="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
@@ -67,15 +61,16 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, m
 
         <!-- Contact quick links -->
         <div class="flex flex-col gap-2 text-sm">
-          <a href="tel:+525547803794" class="text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-blue-500" aria-hidden="true">
+          <a href="tel:+525547803794" class="animated-underline text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-2 w-fit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-blue-500 flex-shrink-0" aria-hidden="true">
               <path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z" clip-rule="evenodd"/>
             </svg>
             (55) 4780 3794
           </a>
-          <a href="mailto:director@electroneumaticainteractiva.com" class="text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-blue-500" aria-hidden="true">
-              <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z"/><path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z"/>
+          <a href="mailto:director@electroneumaticainteractiva.com" class="animated-underline text-slate-400 hover:text-white transition-colors duration-200 flex items-center gap-2 w-fit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-blue-500 flex-shrink-0" aria-hidden="true">
+              <path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z"/>
+              <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z"/>
             </svg>
             director@electroneumaticainteractiva.com
           </a>
@@ -97,7 +92,7 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, m
               <li>
                 <a
                   href={link.href}
-                  class="text-slate-400 hover:text-white text-sm transition-colors duration-200"
+                  class="animated-underline text-slate-400 hover:text-white text-sm transition-colors duration-200"
                 >
                   {link.label}
                 </a>
@@ -111,14 +106,13 @@ const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola, m
   </div>
 
   <!-- Bottom bar -->
-  <div class="border-t border-white/05">
+  <div class="border-t border-white/[0.05]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-slate-500 text-xs text-center sm:text-left">
         &copy; {year} Electroneumática Interactiva. Todos los derechos reservados.
       </p>
       <div class="flex items-center gap-6">
-        <a href={`${import.meta.env.BASE_URL}sitemap-index.xml`} class="text-slate-500 hover:text-slate-400 text-xs transition-colors duration-200">Sitemap</a>
-        <!-- WhatsApp link in footer -->
+        <a href={`${import.meta.env.BASE_URL}sitemap-index.xml`} class="animated-underline text-slate-500 hover:text-slate-400 text-xs transition-colors duration-200">Sitemap</a>
         <a
           href={WA_HREF}
           target="_blank"

@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+/* ─── Semantic theme tokens (dark = default) ─────────────────────────── */
+:root {
+  --bg-base:          #050810;
+  --bg-elevated:      #090d1a;
+  --bg-card:          #0f1729;
+  --fg-primary:       #f1f5f9;
+  --fg-secondary:     #cbd5e1;
+  --fg-muted:         #94a3b8;
+  --border-subtle:    rgba(255,255,255,0.07);
+  --border-strong:    rgba(255,255,255,0.14);
+  --accent-blue:      #60a5fa;   /* blue-400 — readable on dark */
+  --accent-cyan:      #22d3ee;   /* cyan-400 */
+  --accent-green:     #4ade80;   /* green-400 */
+  /* Theme transition — smooth but instant enough not to feel sluggish */
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg-base:          #f7f9fc;
+  --bg-elevated:      #ffffff;
+  --bg-card:          #ffffff;
+  --fg-primary:       #0f172a;
+  --fg-secondary:     #334155;
+  --fg-muted:         #64748b;
+  --border-subtle:    rgba(15,23,42,0.08);
+  --border-strong:    rgba(15,23,42,0.18);
+  --accent-blue:      #2563eb;   /* blue-600 — enough contrast on white */
+  --accent-cyan:      #0891b2;   /* cyan-600 */
+  --accent-green:     #16a34a;   /* green-600 */
+  color-scheme: light;
+}
+
 /* ─── Design Tokens ─────────────────────────────────────────────────── */
 @theme {
   /* Brand palette — deep navy + electric blue accent */
@@ -37,11 +69,13 @@
   --spacing-30: 7.5rem;
 
   /* Border radius */
-  --radius-card: 0.75rem;
+  --radius-card: 0.875rem;
 
   /* Shadows */
   --shadow-glow: 0 0 40px -8px color-mix(in srgb, var(--color-brand-500) 35%, transparent);
-  --shadow-card: 0 4px 24px -4px rgba(0,0,0,0.5);
+  --shadow-glow-cyan: 0 0 32px -6px color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+  --shadow-card: 0 4px 24px -4px rgba(0,0,0,0.55);
+  --shadow-card-hover: 0 12px 40px -8px rgba(0,0,0,0.7);
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────── */
@@ -53,22 +87,45 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* View transitions: cross-fade between sections */
+  @supports (view-transition-name: none) {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   margin: 0;
-  background-color: var(--color-surface-900);
-  color: #e2e8f0;
+  background-color: var(--bg-base);
+  color: var(--fg-secondary);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 img, video {
   max-width: 100%;
   display: block;
+}
+
+/* ─── View Transitions ───────────────────────────────────────────────── */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vt-fade-out 0.18s ease forwards;
+}
+::view-transition-new(root) {
+  animation: vt-fade-in 0.22s ease forwards;
+}
+@keyframes vt-fade-out {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+@keyframes vt-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
 }
 
 /* ─── Skip-to-content ────────────────────────────────────────────────── */
@@ -110,34 +167,295 @@ img, video {
   text-transform: uppercase;
 }
 
-/* ─── Gradient mesh background helper ───────────────────────────────── */
+/* ─── Aurora / Gradient Mesh Hero Background ─────────────────────────── */
 .mesh-bg {
   background:
     radial-gradient(ellipse 900px 500px at 0% 0%, rgba(30,64,175,0.18) 0%, transparent 60%),
     radial-gradient(ellipse 700px 400px at 100% 30%, rgba(6,182,212,0.12) 0%, transparent 55%),
     radial-gradient(ellipse 600px 600px at 50% 100%, rgba(30,64,175,0.10) 0%, transparent 60%),
-    var(--color-surface-900);
+    var(--bg-base);
+}
+[data-theme="light"] .mesh-bg {
+  background:
+    radial-gradient(ellipse 900px 500px at 0% 0%, rgba(186,230,253,0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 400px at 100% 30%, rgba(165,243,252,0.30) 0%, transparent 55%),
+    radial-gradient(ellipse 600px 600px at 50% 100%, rgba(219,234,254,0.40) 0%, transparent 60%),
+    #f7f9fc;
+}
+
+/* ─── Hero Aurora — animated CSS-only mesh ───────────────────────────── */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-aurora::before {
+  content: '';
+  position: absolute;
+  width: 900px;
+  height: 600px;
+  top: -20%;
+  left: -10%;
+  background: radial-gradient(ellipse, rgba(37,99,235,0.22) 0%, transparent 65%);
+  animation: aurora-drift-a 14s ease-in-out infinite alternate;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.hero-aurora::after {
+  content: '';
+  position: absolute;
+  width: 700px;
+  height: 500px;
+  bottom: -10%;
+  right: -5%;
+  background: radial-gradient(ellipse, rgba(6,182,212,0.16) 0%, transparent 65%);
+  animation: aurora-drift-b 18s ease-in-out infinite alternate;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+/* Third aurora orb via separate element */
+.hero-aurora-c {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 30%;
+  left: 40%;
+  background: radial-gradient(ellipse, rgba(30,64,175,0.14) 0%, transparent 65%);
+  animation: aurora-drift-c 22s ease-in-out infinite alternate;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+@keyframes aurora-drift-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(80px, 40px) scale(1.1); }
+  100% { transform: translate(-40px, 80px) scale(0.95); }
+}
+@keyframes aurora-drift-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-60px, -30px) scale(1.15); }
+  100% { transform: translate(50px, 60px) scale(0.9); }
+}
+@keyframes aurora-drift-c {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50%  { transform: translate(40px, -50px) scale(1.2); opacity: 1; }
+  100% { transform: translate(-30px, 30px) scale(0.85); opacity: 0.6; }
 }
 
 /* ─── Section divider ────────────────────────────────────────────────── */
 .section-divider {
   border: none;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--border-subtle);
   margin: 0;
 }
 
-/* ─── Card base ──────────────────────────────────────────────────────── */
+/* ─── Card base (non-bento) ──────────────────────────────────────────── */
 .card-base {
-  background: var(--color-surface-card);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
 }
 .card-base:hover {
-  border-color: rgba(59,130,246,0.35);
+  border-color: rgba(59,130,246,0.4);
   box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+}
+
+/* ─── Glassmorphism panel ────────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(15, 23, 41, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-card);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+[data-theme="light"] .glass-panel {
+  background: rgba(255,255,255,0.75);
+  border-color: rgba(15,23,42,0.12);
+}
+
+/* ─── Bento grid cards ───────────────────────────────────────────────── */
+.bento-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(59,130,246,0.06) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.bento-card:hover::before {
+  opacity: 1;
+}
+
+.bento-card:hover {
+  border-color: rgba(59,130,246,0.4);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+}
+
+.bento-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Animated underline links ───────────────────────────────────────── */
+.animated-underline {
+  position: relative;
+  text-decoration: none;
+}
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.animated-underline:hover::after,
+.animated-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ─── Scroll-driven fade-up for sections ─────────────────────────────── */
+/* Uses animation-timeline: view() where supported;
+   falls back to the .reveal class toggled by IntersectionObserver JS */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 400ms; }
+.reveal-stagger.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Native scroll-driven animation (progressive enhancement) */
+@supports (animation-timeline: view()) {
+  .scroll-fade {
+    animation: scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  @keyframes scroll-reveal {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Override the JS-based reveal when native scroll timeline is supported */
+  .reveal, .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: scroll-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+}
+
+/* ─── Hero text reveal (split-word entrance) ─────────────────────────── */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px) skewY(3deg);
+  animation: word-enter 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.hero-word:nth-child(1) { animation-delay: 0.05s; }
+.hero-word:nth-child(2) { animation-delay: 0.18s; }
+.hero-word:nth-child(3) { animation-delay: 0.31s; }
+.hero-word:nth-child(4) { animation-delay: 0.44s; }
+.hero-word:nth-child(5) { animation-delay: 0.57s; }
+
+@keyframes word-enter {
+  to { opacity: 1; transform: translateY(0) skewY(0deg); }
+}
+
+/* ─── Marquee / trust band ───────────────────────────────────────────── */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Stat counter (CSS count-up via JS hook) ────────────────────────── */
+.stat-counter {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Magnetic button glow ───────────────────────────────────────────── */
+/* No position/display rules here — let utility classes (e.g. `fixed`) win. */
+.btn-magnetic {
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+  will-change: transform;
+}
+.btn-magnetic:hover {
+  box-shadow: 0 8px 32px -8px rgba(37,211,102,0.45);
   transform: translateY(-2px);
+}
+
+/* ─── Spotlight cursor-follow on hero (JS-powered, perf safe) ────────── */
+.hero-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(600px circle at var(--sx, 50%) var(--sy, 50%), rgba(37,99,235,0.07) 0%, transparent 65%);
+  transition: background 0.1s ease;
 }
 
 /* ─── Focus ring ─────────────────────────────────────────────────────── */
@@ -147,7 +465,7 @@ img, video {
   border-radius: 4px;
 }
 
-/* ─── Reduced motion ─────────────────────────────────────────────────── */
+/* ─── Reduced motion — comprehensive override ────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -155,10 +473,334 @@ img, video {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Still show content that would be hidden waiting for animation */
+  .hero-word,
+  .reveal,
+  .reveal-stagger > *,
+  .scroll-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
 }
 
 /* ─── Scrollbar (Webkit) ─────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--color-surface-800); }
-::-webkit-scrollbar-thumb { background: #1d4ed8; border-radius: 4px; }
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: var(--bg-elevated); }
+::-webkit-scrollbar-thumb { background: rgba(29,78,216,0.7); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+/* ─── Image skeleton (LQIP-style CSS blur-up) ───────────────────────── */
+.img-blur-up {
+  filter: blur(8px);
+  transform: scale(1.03);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+.img-blur-up.loaded {
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* ─── Section heading accent line ────────────────────────────────────── */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, #22d3ee, #3b82f6);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ─── Theme toggle button ────────────────────────────────────────────── */
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+#theme-toggle:hover {
+  background: rgba(255,255,255,0.08);
+}
+[data-theme="light"] #theme-toggle:hover {
+  background: rgba(15,23,42,0.06);
+}
+#theme-toggle:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+#theme-toggle .icon-sun  { display: none; }
+#theme-toggle .icon-moon { display: block; }
+[data-theme="light"] #theme-toggle .icon-sun  { display: block; }
+[data-theme="light"] #theme-toggle .icon-moon { display: none; }
+
+/* ─── Strategy A — light-mode overrides for hardcoded Tailwind utilities ─
+   These rules re-skin every component without touching component files.
+   Ordered: text → background → border → section backgrounds → misc.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* Text colors */
+[data-theme="light"] .text-white       { color: var(--fg-primary) !important; }
+[data-theme="light"] .text-slate-300   { color: var(--fg-secondary) !important; }
+[data-theme="light"] .text-slate-400   { color: var(--fg-muted) !important; }
+[data-theme="light"] .text-slate-500   { color: #94a3b8 !important; }
+
+/* Surface/background utilities */
+[data-theme="light"] .bg-surface-900   { background-color: var(--bg-base) !important; }
+[data-theme="light"] .bg-surface-800   { background-color: #eef2f7 !important; }
+[data-theme="light"] .bg-surface-700   { background-color: #f1f5f9 !important; }
+[data-theme="light"] .bg-surface-card  { background-color: var(--bg-card) !important; }
+
+/* Border utilities */
+[data-theme="light"] .border-white\/10  { border-color: var(--border-subtle) !important; }
+[data-theme="light"] .border-white\/\[0\.05\] { border-color: var(--border-subtle) !important; }
+[data-theme="light"] .border-white\/\[0\.06\] { border-color: var(--border-subtle) !important; }
+
+/* Section sections that use bg-surface-* as class on the <section> element */
+[data-theme="light"] section.bg-surface-800 { background-color: #eef2f7 !important; }
+[data-theme="light"] footer.bg-surface-900  { background-color: #f1f5f9 !important; }
+
+/* Hamburger bars */
+[data-theme="light"] .hamburger-bar { background-color: var(--fg-primary) !important; }
+
+/* Nav backdrop — JS sets inline style; override for light is handled in JS */
+
+/* Tag pills in Servicios */
+[data-theme="light"] .bg-blue-900\/40   { background-color: rgba(37,99,235,0.10) !important; }
+[data-theme="light"] .border-blue-700\/30 { border-color: rgba(37,99,235,0.25) !important; }
+[data-theme="light"] .text-blue-300     { color: #1d4ed8 !important; }
+
+/* Bento icon badge backgrounds — they're already semi-transparent so just adjust */
+[data-theme="light"] .bg-blue-600\/15   { background-color: rgba(37,99,235,0.12) !important; }
+[data-theme="light"] .bg-cyan-600\/15   { background-color: rgba(8,145,178,0.12) !important; }
+[data-theme="light"] .bg-violet-600\/15 { background-color: rgba(124,58,237,0.10) !important; }
+[data-theme="light"] .bg-green-600\/15  { background-color: rgba(22,163,74,0.12) !important; }
+[data-theme="light"] .bg-amber-600\/15  { background-color: rgba(217,119,6,0.12) !important; }
+[data-theme="light"] .bg-rose-600\/15   { background-color: rgba(225,29,72,0.10) !important; }
+
+/* Bento icon badge borders */
+[data-theme="light"] .border-blue-700\/30   { border-color: rgba(37,99,235,0.25) !important; }
+[data-theme="light"] .border-cyan-700\/30   { border-color: rgba(8,145,178,0.25) !important; }
+[data-theme="light"] .border-violet-700\/30 { border-color: rgba(124,58,237,0.22) !important; }
+[data-theme="light"] .border-green-700\/30  { border-color: rgba(22,163,74,0.25) !important; }
+[data-theme="light"] .border-amber-700\/30  { border-color: rgba(217,119,6,0.25) !important; }
+[data-theme="light"] .border-rose-700\/30   { border-color: rgba(225,29,72,0.22) !important; }
+
+/* Icon text colors — stay vibrant but shift to slightly darker tones */
+[data-theme="light"] .text-blue-400   { color: #1d4ed8 !important; }
+[data-theme="light"] .text-cyan-400   { color: #0891b2 !important; }
+[data-theme="light"] .text-violet-400 { color: #7c3aed !important; }
+[data-theme="light"] .text-green-400  { color: #16a34a !important; }
+[data-theme="light"] .text-amber-400  { color: #b45309 !important; }
+[data-theme="light"] .text-rose-400   { color: #e11d48 !important; }
+
+/* Stars in Testimonios */
+[data-theme="light"] .text-amber-400  { color: #d97706 !important; }
+
+/* Contact form fields */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  color: var(--fg-primary) !important;
+  background-color: var(--bg-elevated) !important;
+  border-color: var(--border-strong) !important;
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+[data-theme="light"] select option {
+  background-color: var(--bg-elevated);
+  color: var(--fg-primary);
+}
+
+/* Back-to-top button */
+[data-theme="light"] #back-to-top {
+  background-color: rgba(37,99,235,0.85) !important;
+  color: #fff !important;
+}
+
+/* Logo wordmark inline styles — override via a wrapper class approach */
+[data-theme="light"] .logo-wordmark-primary   { color: var(--fg-primary) !important; }
+[data-theme="light"] .logo-wordmark-accent     { color: #0891b2 !important; }
+
+/* Diferenciadores divider lines & decorative number */
+[data-theme="light"] .bg-white\/10  { background-color: var(--border-subtle) !important; }
+[data-theme="light"] .text-blue-900\/25 { color: rgba(30,58,138,0.15) !important; }
+
+/* Hero eyebrow badge */
+[data-theme="light"] .border-blue-500\/30  { border-color: rgba(37,99,235,0.25) !important; }
+[data-theme="light"] .bg-blue-500\/10      { background-color: rgba(37,99,235,0.08) !important; }
+
+/* Hero secondary CTA button */
+[data-theme="light"] .border-white\/20  { border-color: var(--border-strong) !important; }
+
+/* Footer coverage badges */
+[data-theme="light"] .border-slate-700  { border-color: var(--border-strong) !important; }
+
+/* Testimonios separator lines (dynamic bg classes like bg-blue-600 used inline)
+   Those are solid avatar bg colors — intentionally keep them colored in light mode */
+
+/* CTA band inside Diferenciadores uses bg-gradient-to-r from-blue-900/85 to-cyan-900/65
+   — overlaid on an image, keep it dark for readability regardless of theme */
+
+/* ─── Hero background light-mode ─────────────────────────────────────── */
+/* The Hero gradient is set via inline style; override with a CSS class
+   that the light-mode selector can target */
+[data-theme="light"] .hero-bg-gradient {
+  background:
+    radial-gradient(ellipse 90% 60% at 80% 0%, rgba(186,230,253,0.55), transparent 60%),
+    radial-gradient(ellipse 70% 70% at 0% 100%, rgba(219,234,254,0.50), transparent 55%),
+    linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 45%, #dbeafe 75%, #f0f9ff 100%) !important;
+}
+
+/* Hero circuit pattern — switch trace color to darker blue for light bg */
+[data-theme="light"] .hero-circuit-pattern line,
+[data-theme="light"] .hero-circuit-pattern path {
+  stroke: rgba(37,99,235,0.35) !important;
+}
+[data-theme="light"] .hero-circuit-pattern circle {
+  fill: rgba(37,99,235,0.55) !important;
+}
+
+/* Hero aurora orbs — more visible on light */
+[data-theme="light"] .hero-aurora::before {
+  background: radial-gradient(ellipse, rgba(37,99,235,0.14) 0%, transparent 65%);
+}
+[data-theme="light"] .hero-aurora::after {
+  background: radial-gradient(ellipse, rgba(8,145,178,0.12) 0%, transparent 65%);
+}
+
+/* Hero energy beams — darker so they show on light bg */
+[data-theme="light"] .hero-energy-beams .beam,
+[data-theme="light"] .hero-energy-beams .beam-a,
+[data-theme="light"] .hero-energy-beams .beam-c {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(8,145,178,0.0) 20%,
+    rgba(8,145,178,0.55) 50%,
+    rgba(8,145,178,0.0) 80%,
+    transparent 100%
+  ) !important;
+  filter: drop-shadow(0 0 5px rgba(8,145,178,0.4)) !important;
+}
+[data-theme="light"] .hero-energy-beams .beam-b {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(37,99,235,0.50) 50%,
+    transparent
+  ) !important;
+}
+
+/* Hero bottom fade — needs to blend into the light section below */
+[data-theme="light"] .hero-bottom-fade {
+  background: linear-gradient(to top, #eef2f7, transparent) !important;
+}
+
+/* Hero scroll indicator */
+[data-theme="light"] .hero-scroll-indicator { color: #94a3b8 !important; }
+
+/* Marquee trust band */
+[data-theme="light"] .bg-surface-900\/60 { background-color: rgba(238,242,247,0.8) !important; }
+[data-theme="light"] .border-white\/06   { border-color: var(--border-subtle) !important; }
+
+/* Skip link stays dark regardless of theme */
+
+/* ─── Hover utilities with white alpha backgrounds ───────────────────── */
+/* Header hamburger button hover */
+[data-theme="light"] #menu-toggle:hover {
+  background-color: rgba(15,23,42,0.06) !important;
+}
+/* Desktop nav link hover (bg-white/5) */
+[data-theme="light"] .nav-link:hover,
+[data-theme="light"] .mobile-nav-link:hover {
+  background-color: rgba(15,23,42,0.05) !important;
+  color: var(--fg-primary) !important;
+}
+/* Desktop nav links in normal state */
+[data-theme="light"] .nav-link {
+  color: var(--fg-secondary) !important;
+}
+/* Hero secondary CTA hover (hover:bg-white/5) */
+[data-theme="light"] a[class*="border-white"]:hover,
+[data-theme="light"] a[class*="hover:bg-white"]:hover {
+  background-color: rgba(15,23,42,0.04) !important;
+}
+
+/* ─── Gradient overlays on images in bento cards & Diferenciadores ──── */
+/* The dark overlay divs sit on top of images to fade the image into the card bg.
+   In light mode, replace with a white-based gradient so content stays legible.
+   Using background shorthand override since Tailwind v4 compiles these to bg props.  */
+[data-theme="light"] .bento-card .absolute.inset-0.bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(255,255,255,0.92), transparent) !important;
+}
+/* Diferenciadores image overlays (from-surface-900/50) */
+[data-theme="light"] .rounded-2xl .absolute.inset-0.bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(238,242,247,0.55), transparent) !important;
+}
+
+/* ─── Map embed — light mode uses normal colors instead of inverted ──── */
+[data-theme="light"] #contacto iframe {
+  filter: none !important;
+}
+
+/* ─── Contact form status messages ───────────────────────────────────── */
+[data-theme="light"] .bg-green-900\/40 { background-color: rgba(22,163,74,0.12) !important; }
+[data-theme="light"] .text-green-300   { color: #16a34a !important; }
+[data-theme="light"] .bg-rose-900\/40  { background-color: rgba(225,29,72,0.10) !important; }
+[data-theme="light"] .text-rose-300    { color: #e11d48 !important; }
+
+/* ─── Shadow adjustments for light mode ─────────────────────────────── */
+/* Cards on light bg don't need the very dark drop shadow */
+:root[data-theme="light"] {
+  --shadow-card: 0 4px 24px -4px rgba(15,23,42,0.10);
+  --shadow-card-hover: 0 12px 40px -8px rgba(15,23,42,0.18);
+}
+
+/* ─── Diferenciadores section divider lines ──────────────────────────── */
+[data-theme="light"] .h-px.flex-1.bg-white\/10 {
+  background-color: var(--border-subtle) !important;
+}
+
+/* ─── Hero text gradient (TRANSFORMA) — keep on light but ensure legibility */
+/* The gradient from-blue-400 via-cyan-400 to-blue-300 reads well enough on light */
+
+/* ─── Smooth color transition on theme switch ────────────────────────── */
+/* body already has its own transition declaration above.
+   Add theme-switch transitions ONLY to elements that don't have complex
+   existing transitions so we don't clobber hover/animation transitions.   */
+[data-theme] section,
+[data-theme] footer,
+[data-theme] header,
+[data-theme] nav,
+[data-theme] article,
+[data-theme] aside,
+[data-theme] .section-divider,
+[data-theme] .marquee-track span {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
