@@ -1,0 +1,79 @@
+---
+import { proceso } from '../data/proceso';
+---
+
+<section id="proceso" class="py-24 lg:py-32" aria-labelledby="proceso-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <header class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <p class="font-sub text-sm tracking-widest mb-3 section-eyebrow inline-flex text-blue-400">
+        CÓMO TRABAJAMOS
+      </p>
+      <h2 id="proceso-heading" class="font-heading text-5xl sm:text-6xl text-white mb-4 mt-2">
+        NUESTRO PROCESO
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">
+        Cuatro fases claras y documentadas. Desde el primer contacto hasta el mantenimiento continuo,
+        siempre sabes en qué paso estamos.
+      </p>
+    </header>
+
+    <ol
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-stagger relative"
+      role="list"
+      aria-label="Fases del proceso de trabajo"
+    >
+      {proceso.map((paso, idx) => (
+        <li class="relative">
+          <article class="bento-card p-7 h-full flex flex-col relative">
+            <!-- Step number background -->
+            <span
+              class="absolute top-3 right-4 font-heading text-7xl text-blue-900/20 select-none pointer-events-none leading-none"
+              aria-hidden="true"
+            >
+              {paso.numero}
+            </span>
+
+            <!-- Icon -->
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-cyan-600/15 border border-cyan-700/30 mb-5 relative z-10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-cyan-400"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d={paso.iconPath} />
+              </svg>
+            </div>
+
+            <p class="font-sub text-xs tracking-widest text-blue-400 mb-2">PASO {paso.numero}</p>
+            <h3 class="font-heading text-xl text-white mb-2 relative z-10">{paso.titulo}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed flex-1 mb-4">{paso.descripcion}</p>
+
+            <p class="text-xs font-sub tracking-wider text-cyan-300/80 inline-flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd"/>
+              </svg>
+              {paso.duracion}
+            </p>
+          </article>
+
+          <!-- Arrow connector (desktop only, except last item) -->
+          {idx < proceso.length - 1 && (
+            <div
+              class="hidden lg:flex absolute top-1/2 -right-3 translate-x-full -translate-y-1/2 z-10 items-center justify-center"
+              aria-hidden="true"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-500/40">
+                <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

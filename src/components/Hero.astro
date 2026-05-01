@@ -1,8 +1,9 @@
 ---
-// TODO: replace WA_NUMBER with real WhatsApp business number before launch
-const WA_NUMBER = '+526692629862';
-const WA_MSG    = encodeURIComponent('Hola, me interesa obtener una asesoría gratuita sobre sus servicios de automatización e instalaciones eléctricas.');
-const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
+import { waUrl, url } from '../data/site';
+
+const WA_HREF = waUrl(
+  'Hola, me interesa obtener una asesoría gratuita sobre sus servicios de automatización e instalaciones eléctricas.'
+);
 
 const stats = [
   { value: 34,  suffix: '+', label: 'Años de experiencia' },
@@ -122,9 +123,9 @@ const stats = [
           Solicitar asesoría gratis
         </a>
 
-        <!-- Secondary: scroll to services -->
+        <!-- Secondary: link to services page -->
         <a
-          href="#servicios"
+          href={url('/servicios')}
           class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-semibold text-white border border-white/20 hover:border-blue-400/60 hover:bg-white/5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-400 group"
         >
           Ver servicios

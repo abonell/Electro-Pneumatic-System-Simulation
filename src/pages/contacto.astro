@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contacto from '../components/Contacto.astro';
+import { url } from '../data/site';
+---
+
+<Layout
+  title="Contacto | Electroneumática Interactiva"
+  description="Contáctanos por WhatsApp, teléfono o correo. Atención en Estado de México, CDMX y zona metropolitana. Lunes a viernes 8:00–18:00 h."
+>
+  <Header />
+  <main id="contenido-principal">
+
+    <section class="pt-32 pb-12 lg:pt-40 lg:pb-16" aria-label="Encabezado de contacto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Migas de pan" class="mb-4 text-sm">
+          <ol class="flex items-center gap-2 text-slate-500">
+            <li><a href={url('/')} class="hover:text-blue-300 transition-colors">Inicio</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-blue-300">Contacto</li>
+          </ol>
+        </nav>
+        <h1 class="font-heading text-5xl sm:text-6xl lg:text-7xl text-white mb-4">
+          HABLEMOS<br/>
+          <span class="text-blue-400">HOY</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl">
+          Atención inmediata en horario laboral. Para urgencias industriales fuera de horario, mensaje
+          por WhatsApp con la palabra "URGENTE".
+        </p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+    <Contacto />
+  </main>
+  <Footer />
+</Layout>

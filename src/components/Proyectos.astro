@@ -1,0 +1,105 @@
+---
+import { proyectos } from '../data/proyectos';
+import { url } from '../data/site';
+
+interface Props {
+  /** Limit number of projects shown (default = all). */
+  limit?: number;
+  /** Show only featured projects. */
+  soloDestacados?: boolean;
+  /** Show CTA "Ver todos" link to /proyectos. */
+  showAllLink?: boolean;
+}
+
+const { limit, soloDestacados = false, showAllLink = false } = Astro.props;
+
+let items = soloDestacados ? proyectos.filter(p => p.destacado) : proyectos;
+if (limit) items = items.slice(0, limit);
+---
+
+<section id="proyectos" class="py-24 lg:py-32 bg-surface-800" aria-labelledby="proyectos-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <header class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <p class="font-sub text-sm tracking-widest mb-3 section-eyebrow inline-flex text-blue-400">
+        CASOS DE ÉXITO
+      </p>
+      <h2 id="proyectos-heading" class="font-heading text-5xl sm:text-6xl text-white mb-4 mt-2">
+        PROYECTOS REALIZADOS
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">
+        Algunas de las empresas y residencias que confían en nuestro equipo. Cada proyecto, una historia
+        de retos resueltos y resultados medibles.
+      </p>
+    </header>
+
+    <ul
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-stagger"
+      role="list"
+      aria-label="Lista de proyectos"
+    >
+      {items.map(p => (
+        <li>
+          <a
+            href={url(`/proyecto/${p.slug}`)}
+            class="bento-card group flex flex-col overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            aria-label={`Ver caso de éxito: ${p.titulo}`}
+          >
+            <div class="relative h-48 overflow-hidden flex-shrink-0">
+              <img
+                src={p.imagen}
+                alt={p.imagenAlt}
+                width="800"
+                height="533"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04] img-blur-up"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent opacity-80"></div>
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-sub tracking-widest bg-surface-card/80 text-blue-300 border border-blue-700/30 backdrop-blur">
+                {p.sector.toUpperCase()}
+              </span>
+            </div>
+
+            <div class="flex flex-col flex-1 p-6">
+              <p class="font-sub text-xs tracking-widest text-cyan-400 mb-2">{p.cliente}</p>
+              <h3 class="font-heading text-2xl text-white mb-2 group-hover:text-blue-300 transition-colors duration-200">
+                {p.titulo}
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-1">{p.resumen}</p>
+
+              <ul class="flex flex-wrap gap-1.5 mb-4" aria-label="Resultados clave">
+                {p.resultados.slice(0, 2).map(r => (
+                  <li class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-green-900/30 text-green-300 border border-green-700/20">
+                    {r}
+                  </li>
+                ))}
+              </ul>
+
+              <span class="animated-underline inline-flex items-center gap-1.5 text-sm font-semibold text-blue-300 group-hover:text-blue-200 transition-colors duration-200 w-fit">
+                Ver caso completo
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {showAllLink && (
+      <div class="text-center mt-12 reveal">
+        <a
+          href={url('/proyectos')}
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white border border-white/20 hover:border-blue-400/60 hover:bg-white/5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-blue-400 group"
+        >
+          Ver todos los proyectos
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" aria-hidden="true">
+            <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/>
+          </svg>
+        </a>
+      </div>
+    )}
+  </div>
+</section>

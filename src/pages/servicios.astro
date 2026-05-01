@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Servicios from '../components/Servicios.astro';
+import Sectores from '../components/Sectores.astro';
+import Proceso from '../components/Proceso.astro';
+import Certificaciones from '../components/Certificaciones.astro';
+import { url } from '../data/site';
+---
+
+<Layout
+  title="Servicios | Electroneumática Interactiva"
+  description="Catálogo completo: electroneumática industrial, domótica, instalaciones eléctricas, mantenimiento, modernización y capacitación técnica. 34 años de experiencia en Estado de México y CDMX."
+>
+  <Header />
+  <main id="contenido-principal">
+
+    <!-- Page intro / breadcrumb hero -->
+    <section class="pt-32 pb-12 lg:pt-40 lg:pb-16" aria-label="Encabezado de servicios">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Migas de pan" class="mb-4 text-sm">
+          <ol class="flex items-center gap-2 text-slate-500">
+            <li><a href={url('/')} class="hover:text-blue-300 transition-colors">Inicio</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-blue-300">Servicios</li>
+          </ol>
+        </nav>
+        <h1 class="font-heading text-5xl sm:text-6xl lg:text-7xl text-white mb-4">
+          NUESTROS<br/>
+          <span class="text-blue-400">SERVICIOS</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl">
+          Soluciones técnicas integrales para industria, comercio y hogar. Cada proyecto con el respaldo
+          de 34 años de experiencia en campo.
+        </p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+    <Servicios eyebrow="CATÁLOGO COMPLETO" heading="QUÉ HACEMOS" />
+    <hr class="section-divider" />
+    <Sectores />
+    <hr class="section-divider" />
+    <Proceso />
+    <hr class="section-divider" />
+    <Certificaciones />
+
+    <!-- CTA final -->
+    <section class="py-24" aria-label="Solicitar cotización">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+        <h2 class="font-heading text-4xl sm:text-5xl text-white mb-4">¿LISTO PARA TU PROYECTO?</h2>
+        <p class="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
+          Cuéntanos qué necesitas. Diagnóstico inicial sin costo, propuesta en 5 días hábiles.
+        </p>
+        <a
+          href={url('/cotizacion')}
+          class="btn-magnetic inline-flex items-center gap-3 px-8 py-4 rounded-xl text-base font-bold text-white bg-blue-600 hover:bg-blue-500 transition-all duration-200 shadow-lg hover:shadow-blue-600/30 hover:scale-[1.03] focus-visible:ring-2 focus-visible:ring-blue-400"
+        >
+          Solicitar cotización
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
+            <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

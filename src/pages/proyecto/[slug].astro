@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { proyectos, type Proyecto } from '../../data/proyectos';
+import { findServicio } from '../../data/servicios';
+import { findSector } from '../../data/sectores';
+import { waUrl, url } from '../../data/site';
+
+export async function getStaticPaths() {
+  return proyectos.map(p => ({
+    params: { slug: p.slug },
+    props:  { proyecto: p },
+  }));
+}
+
+interface Props {
+  proyecto: Proyecto;
+}
+
+const { proyecto } = Astro.props;
+
+const sector = findSector(proyecto.sector);
+const serviciosUsados = proyecto.servicios.map(slug => findServicio(slug)).filter(Boolean);
+
+// Format date — fecha is YYYY-MM
+const [year, month] = proyecto.fecha.split('-');
+const monthName = new Date(Number(year), Number(month) - 1).toLocaleDateString('es-MX', { month: 'long', year: 'numeric' });
+---
+
+<Layout
+  title={`${proyecto.titulo} | Casos de éxito`}
+  description={proyecto.resumen}
+>
+  <Header />
+  <main id="contenido-principal">
+
+    <!-- Hero with image -->
+    <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden" aria-label={`Proyecto: ${proyecto.titulo}`}>
+      <div class="absolute inset-0 z-0">
+        <img
+          src={proyecto.imagen}
+          alt=""
+          aria-hidden="true"
+          class="w-full h-full object-cover opacity-25 img-blur-up"
+          loading="eager"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-surface-900 via-surface-900/85 to-surface-900"></div>
+      </div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav aria-label="Migas de pan" class="mb-6 text-sm">
+          <ol class="flex flex-wrap items-center gap-2 text-slate-500">
+            <li><a href={url('/')} class="hover:text-blue-300 transition-colors">Inicio</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href={url('/proyectos')} class="hover:text-blue-300 transition-colors">Proyectos</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-blue-300">{proyecto.titulo}</li>
+          </ol>
+        </nav>
+
+        <div class="max-w-3xl">
+          {sector && (
+            <span class="inline-flex items-center px-3 py-1 mb-4 rounded-full text-xs font-sub tracking-widest bg-blue-900/40 text-blue-300 border border-blue-700/30">
+              {sector.nombre.toUpperCase()}
+            </span>
+          )}
+
+          <p class="font-sub text-sm tracking-widest text-cyan-400 mb-3">{proyecto.cliente}</p>
+          <h1 class="font-heading text-5xl sm:text-6xl lg:text-7xl text-white mb-6 leading-tight">
+            {proyecto.titulo}
+          </h1>
+          <p class="text-slate-300 text-lg leading-relaxed mb-8">{proyecto.resumen}</p>
+
+          <!-- Meta -->
+          <dl class="flex flex-wrap gap-x-8 gap-y-4 mb-8">
+            <div>
+              <dt class="font-sub text-xs tracking-widest text-blue-400 mb-1">FECHA</dt>
+              <dd class="text-white font-medium capitalize">{monthName}</dd>
+            </div>
+            <div>
+              <dt class="font-sub text-xs tracking-widest text-blue-400 mb-1">UBICACIÓN</dt>
+              <dd class="text-white font-medium">{proyecto.ubicacion}</dd>
+            </div>
+            <div>
+              <dt class="font-sub text-xs tracking-widest text-blue-400 mb-1">CLIENTE</dt>
+              <dd class="text-white font-medium">{proyecto.cliente}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Image showcase -->
+    <section class="py-12 lg:py-16" aria-label="Imagen del proyecto">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+          <img
+            src={proyecto.imagen}
+            alt={proyecto.imagenAlt}
+            loading="lazy"
+            decoding="async"
+            class="w-full h-auto object-cover img-blur-up"
+          />
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Desafío + Solución -->
+    <section class="py-20 lg:py-28 bg-surface-800" aria-label="Desafío y solución">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
+          <article class="reveal">
+            <p class="font-sub text-sm tracking-widest text-rose-400 mb-3 section-eyebrow inline-flex">EL DESAFÍO</p>
+            <h2 class="font-heading text-3xl sm:text-4xl text-white mb-5">PROBLEMA A RESOLVER</h2>
+            <p class="text-slate-300 text-base leading-relaxed">{proyecto.desafio}</p>
+          </article>
+
+          <article class="reveal">
+            <p class="font-sub text-sm tracking-widest text-green-400 mb-3 section-eyebrow inline-flex">LA SOLUCIÓN</p>
+            <h2 class="font-heading text-3xl sm:text-4xl text-white mb-5">QUÉ HICIMOS</h2>
+            <p class="text-slate-300 text-base leading-relaxed">{proyecto.solucion}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- Resultados -->
+    <section class="py-20 lg:py-28" aria-label="Resultados del proyecto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="text-center max-w-2xl mx-auto mb-12 reveal">
+          <p class="font-sub text-sm tracking-widest text-blue-400 mb-3 section-eyebrow inline-flex">RESULTADOS</p>
+          <h2 class="font-heading text-4xl sm:text-5xl text-white mb-3 mt-2">IMPACTO MEDIBLE</h2>
+        </header>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 reveal-stagger" role="list">
+          {proyecto.resultados.map(r => (
+            <li>
+              <article class="bento-card p-6 h-full flex flex-col gap-3">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-600/15 border border-green-700/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-green-400" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <p class="text-white font-semibold leading-snug">{r}</p>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    {serviciosUsados.length > 0 && (
+      <>
+        <hr class="section-divider" />
+        <section class="py-20 lg:py-28 bg-surface-800" aria-label="Servicios involucrados">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <header class="text-center max-w-2xl mx-auto mb-12 reveal">
+              <p class="font-sub text-sm tracking-widest text-blue-400 mb-3 section-eyebrow inline-flex">SERVICIOS APLICADOS</p>
+              <h2 class="font-heading text-4xl sm:text-5xl text-white mb-3 mt-2">QUÉ EJECUTAMOS</h2>
+            </header>
+
+            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 reveal-stagger" role="list">
+              {serviciosUsados.map(s => s && (
+                <li>
+                  <a
+                    href={url(`/servicio/${s.slug}`)}
+                    class="bento-card group p-6 flex items-start gap-4 h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                  >
+                    <div class="flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-xl bg-blue-600/15 border border-blue-700/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-blue-400" aria-hidden="true">
+                        <path d={s.iconPath}/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-heading text-lg text-white mb-1 group-hover:text-blue-300 transition-colors">
+                        {s.titulo}
+                      </h3>
+                      <p class="text-slate-400 text-sm leading-relaxed">{s.descripcionCorta}</p>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </>
+    )}
+
+    <!-- CTA final -->
+    <section class="py-24" aria-label="CTA final">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+        <h2 class="font-heading text-4xl sm:text-5xl text-white mb-4">
+          ¿TIENES UN RETO SIMILAR?
+        </h2>
+        <p class="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
+          Cuéntanos tu caso. Diagnóstico inicial sin costo y propuesta técnica en 5 días hábiles.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href={url('/cotizacion')}
+            class="btn-magnetic inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl text-base font-bold text-white bg-blue-600 hover:bg-blue-500 transition-all duration-200 shadow-lg hover:shadow-blue-600/30 hover:scale-[1.03] focus-visible:ring-2 focus-visible:ring-blue-400"
+          >
+            Solicitar cotización
+          </a>
+          <a
+            href={waUrl(`Hola, vi su caso de éxito "${proyecto.titulo}" y me interesa platicar sobre un proyecto similar.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl text-base font-semibold text-white bg-green-600 hover:bg-green-500 transition-all duration-200 shadow-lg hover:shadow-green-600/30 focus-visible:ring-2 focus-visible:ring-green-400"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

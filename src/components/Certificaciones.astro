@@ -1,0 +1,43 @@
+---
+import { certificaciones } from '../data/certificaciones';
+---
+
+<section id="certificaciones" class="py-24 lg:py-32 bg-surface-800" aria-labelledby="certificaciones-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <header class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <p class="font-sub text-sm tracking-widest mb-3 section-eyebrow inline-flex text-blue-400">
+        NORMAS Y CERTIFICACIONES
+      </p>
+      <h2 id="certificaciones-heading" class="font-heading text-5xl sm:text-6xl text-white mb-4 mt-2">
+        TRABAJAMOS BAJO ESTÁNDARES
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">
+        Cada instalación, programación y proyecto cumple normativas oficiales mexicanas e internacionales.
+        Documentación verificable disponible bajo solicitud.
+      </p>
+    </header>
+
+    <ul
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal-stagger"
+      role="list"
+      aria-label="Lista de normas y certificaciones aplicadas"
+    >
+      {certificaciones.map(cert => (
+        <li>
+          <article class="bento-card p-6 h-full flex flex-col">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-600/15 border border-amber-700/30 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-amber-400" aria-hidden="true">
+                <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+
+            <p class="font-sub text-xs tracking-widest text-amber-400 mb-1">{cert.codigo}</p>
+            <h3 class="font-heading text-xl text-white mb-2">{cert.nombre}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed flex-1">{cert.descripcion}</p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

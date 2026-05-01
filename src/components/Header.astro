@@ -1,17 +1,15 @@
 ---
 import Logo from './Logo.astro';
+import { waUrl, url } from '../data/site';
 
-// TODO: swap WhatsApp number before launch
-const WA_NUMBER = '+526692629862';
-const WA_MSG    = encodeURIComponent('Hola, me interesa conocer sus servicios de automatización e instalaciones eléctricas.');
-const WA_HREF   = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
+const WA_HREF = waUrl();
 
 const navLinks = [
-  { label: 'Inicio',      href: '#inicio' },
-  { label: 'Servicios',   href: '#servicios' },
-  { label: 'Beneficios',  href: '#beneficios' },
-  { label: 'Testimonios', href: '#testimonios' },
-  { label: 'Contacto',   href: '#contacto' },
+  { label: 'Inicio',      href: url('/') },
+  { label: 'Servicios',   href: url('/servicios') },
+  { label: 'Proyectos',   href: url('/proyectos') },
+  { label: 'Cotización',  href: url('/cotizacion') },
+  { label: 'Contacto',    href: url('/contacto') },
 ];
 ---
 
@@ -35,7 +33,7 @@ const navLinks = [
     >
       <!-- Logo / brand — uses Logo.astro wordmark -->
       <a
-        href="#inicio"
+        href={url('/')}
         class="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg p-1 group"
         aria-label="Electroneumática Interactiva — inicio"
       >

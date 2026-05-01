@@ -1,0 +1,61 @@
+---
+import { sectores } from '../data/sectores';
+---
+
+<section id="sectores" class="py-24 lg:py-32" aria-labelledby="sectores-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <header class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <p class="font-sub text-sm tracking-widest mb-3 section-eyebrow inline-flex text-blue-400">
+        SECTORES ATENDIDOS
+      </p>
+      <h2 id="sectores-heading" class="font-heading text-5xl sm:text-6xl text-white mb-4 mt-2">
+        SOLUCIONES PARA CADA INDUSTRIA
+      </h2>
+      <p class="text-slate-400 text-lg leading-relaxed">
+        Desde plantas de manufactura 24/7 hasta residencias inteligentes, adaptamos cada proyecto a las
+        condiciones, regulaciones y exigencias del sector.
+      </p>
+    </header>
+
+    <ul
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 reveal-stagger"
+      role="list"
+      aria-label="Lista de sectores atendidos"
+    >
+      {sectores.map(sector => (
+        <li>
+          <article class="bento-card p-6 h-full flex flex-col">
+            <!-- Icon badge -->
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-600/15 border border-blue-700/30 mb-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-blue-400"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d={sector.iconPath} />
+              </svg>
+            </div>
+
+            <h3 class="font-heading text-2xl text-white mb-3">{sector.nombre}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-5 flex-1">
+              {sector.descripcion}
+            </p>
+
+            <ul class="flex flex-wrap gap-1.5" aria-label={`Ejemplos en sector ${sector.nombre}`}>
+              {sector.ejemplos.map(ej => (
+                <li class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-blue-900/30 text-blue-300 border border-blue-700/20">
+                  {ej}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

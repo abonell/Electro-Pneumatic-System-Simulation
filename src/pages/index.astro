@@ -3,8 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Servicios from '../components/Servicios.astro';
+import Sectores from '../components/Sectores.astro';
 import Beneficios from '../components/Beneficios.astro';
+import Proyectos from '../components/Proyectos.astro';
+import Proceso from '../components/Proceso.astro';
 import Diferenciadores from '../components/Diferenciadores.astro';
+import Certificaciones from '../components/Certificaciones.astro';
 import Testimonios from '../components/Testimonios.astro';
 import Contacto from '../components/Contacto.astro';
 import Footer from '../components/Footer.astro';
@@ -15,11 +19,19 @@ import Footer from '../components/Footer.astro';
   <main id="contenido-principal">
     <Hero />
     <hr class="section-divider" />
-    <Servicios />
+    <Servicios showAllLink />
+    <hr class="section-divider" />
+    <Sectores />
+    <hr class="section-divider" />
+    <Proyectos soloDestacados showAllLink />
+    <hr class="section-divider" />
+    <Proceso />
     <hr class="section-divider" />
     <Beneficios />
     <hr class="section-divider" />
     <Diferenciadores />
+    <hr class="section-divider" />
+    <Certificaciones />
     <hr class="section-divider" />
     <Testimonios />
     <hr class="section-divider" />
